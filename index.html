@@ -73,42 +73,50 @@
                     </div>
                 </div>
 
-                <!-- Load Input Form (Now includes PF) -->
+                <!-- Load Input Form -->
                 <div class="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
                     <h2 class="text-md font-semibold text-blue-300 mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                         Simulasi Operasi
                     </h2>
                     
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1">Power Factor (PF)</label>
-                            <input type="number" id="inputPF" value="0.8" step="0.05" min="0.1" max="1" 
-                                class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
-                                oninput="onPFChange()">
-                        </div>
+                    <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Beban Aktif (MW)</label>
                             <input type="number" id="inputMW" value="10.0" step="0.1" 
                                 class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
-                                oninput="calculateLimits()">
+                                oninput="onMwChange()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Sifat Beban (Mode)</label>
+                            <select id="inputMode" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" onchange="updateAll()">
+                                <option value="lagging">Lagging (Induktif)</option>
+                                <option value="leading">Leading (Kapasitif)</option>
+                            </select>
                         </div>
                     </div>
-                    
-                    <div class="mb-4">
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Sifat Beban (Mode Operasi)</label>
-                        <select id="inputMode" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" onchange="calculateLimits()">
-                            <option value="lagging">Lagging (Over-excited / Induktif)</option>
-                            <option value="leading">Leading (Under-excited / Kapasitif)</option>
-                        </select>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Power Factor (Cos &phi;)</label>
+                            <input type="number" id="inputPF" value="0.80" step="0.01" min="0.01" max="1" 
+                                class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
+                                oninput="onPFChange()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Reaktif (MVAR)</label>
+                            <input type="number" id="inputMVAR" value="7.50" step="0.1" min="0" 
+                                class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
+                                oninput="onMvarChange()">
+                        </div>
                     </div>
 
-                    <button onclick="calculateLimits()" class="w-full bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-500 transition shadow-lg shadow-blue-500/30">Update Kalkulasi</button>
+                    <button onclick="updateAll()" class="w-full bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-500 transition shadow-lg shadow-blue-500/30">Update Kalkulasi</button>
                     
                     <div class="mt-3 grid grid-cols-2 gap-2">
                         <div class="flex flex-col justify-center bg-blue-950/50 p-2 rounded border border-blue-800/50">
-                            <span class="text-[10px] text-slate-400">Batas Maks Engine (P):</span>
-                            <span class="text-sm font-bold text-blue-300" id="engineLimitText">11.46 MW</span>
+                            <span class="text-[10px] text-slate-400">Daya Semu Aktual (S):</span>
+                            <span class="text-sm font-bold text-blue-300" id="actualMvaText">12.50 MVA</span>
                         </div>
                         <div class="flex flex-col justify-center bg-indigo-950/50 p-2 rounded border border-indigo-800/50">
                             <span class="text-[10px] text-slate-400">Reaktif Aktual (Q):</span>
@@ -198,45 +206,74 @@
         const FIXED_MVA = 14.33;
 
         // Gemini API Configuration
-        const apiKey = "AIzaSyDZnSGbyxnCJfCNqAPGb9igVEvOYZTO5Bc"; // KETIK API KEY ANDA DI SINI DI ANTARA TANDA KUTIP
+        const apiKey = "AIzaSyBk8C5w7kVV_i5pIZtCiHMO4Fy8qdOkr1E"; // KETIK API KEY ANDA DI SINI DI ANTARA TANDA KUTIP
 
         // Inisialisasi awal
         window.onload = function() {
             initChart();
-            onPFChange();
+            onMwChange(); // Memicu sinkronisasi data pertama kali
         };
 
-        function onPFChange() {
+        // Ketika P (MW) diubah, pertahankan PF dan hitung ulang MVAR
+        function onMwChange() {
+            let p = parseFloat(document.getElementById('inputMW').value) || 0;
             let pf = parseFloat(document.getElementById('inputPF').value) || 0.8;
-            if (pf > 1) pf = 1;
-            if (pf <= 0) pf = 0.1; 
+            if (pf <= 0) pf = 0.01;
+            let s = p / pf;
+            let q = Math.sqrt(Math.max(0, s * s - p * p));
             
-            const maxMW = FIXED_MVA * pf;
-            document.getElementById('engineLimitText').innerText = `${maxMW.toFixed(2)} MW`;
+            document.getElementById('inputMVAR').value = q.toFixed(2);
+            updateAll();
+        }
+
+        // Ketika PF diubah, pertahankan MW dan hitung ulang MVAR
+        function onPFChange() {
+            let p = parseFloat(document.getElementById('inputMW').value) || 0;
+            let pf = parseFloat(document.getElementById('inputPF').value);
             
-            if (capabilityChart) {
-                updateAll();
-            }
+            // Batasi nilai PF antara 0.01 hingga 1.00
+            if (pf > 1) { pf = 1; document.getElementById('inputPF').value = 1; }
+            if (pf <= 0 || isNaN(pf)) { pf = 0.01; }
+            
+            let s = p / pf;
+            let q = Math.sqrt(Math.max(0, s * s - p * p));
+            
+            document.getElementById('inputMVAR').value = q.toFixed(2);
+            updateAll(); 
+        }
+
+        // Ketika MVAR diubah, pertahankan MW dan hitung balik PF
+        function onMvarChange() {
+            let p = parseFloat(document.getElementById('inputMW').value) || 0;
+            let q = Math.abs(parseFloat(document.getElementById('inputMVAR').value) || 0);
+            
+            let s = Math.sqrt(p * p + q * q);
+            let pf = s === 0 ? 1 : (p / s);
+            
+            document.getElementById('inputPF').value = pf.toFixed(3);
+            updateAll();
         }
 
         function getParams() {
             const mwLoad = parseFloat(document.getElementById('inputMW').value) || 0;
-            let pf = parseFloat(document.getElementById('inputPF').value) || 0.8;
-            if (pf > 1) pf = 1;
-            if (pf <= 0) pf = 0.1;
-            const mode = document.getElementById('inputMode').value; // lagging or leading
-            const maxMW = FIXED_MVA * pf;
+            let qActual = Math.abs(parseFloat(document.getElementById('inputMVAR').value) || 0);
             
-            // Kalkulasi Q Aktual berdasarkan S = P / PF dan Q = sqrt(S^2 - P^2)
-            const sActual = mwLoad / pf;
-            let qActual = Math.sqrt(Math.max(0, Math.pow(sActual, 2) - Math.pow(mwLoad, 2)));
+            // Kalkulasi S aktual dan PF dari input
+            let sActual = Math.sqrt(mwLoad * mwLoad + qActual * qActual);
+            let pf = sActual === 0 ? 1 : (mwLoad / sActual);
+            
+            const mode = document.getElementById('inputMode').value; // lagging or leading
+            
+            // Batas maksimal Engine absolut untuk kurva P berdasarkan Rated PF (0.8)
+            const ratedPF = 0.8;
+            const maxMW = FIXED_MVA * ratedPF; 
             
             // Jika mode leading, Q aktual menjadi negatif di grafik
             if (mode === 'leading') {
                 qActual = -qActual;
             }
 
-            return { mva: FIXED_MVA, pf, mwLoad, maxMW, qActual, mode };
+            return { mva: FIXED_MVA, pf, mwLoad, maxMW, qActual, sActual, mode };
         }
 
         // Fungsi batas
@@ -386,10 +423,11 @@
         }
 
         function calculateLimits() {
-            const { mva, maxMW, mwLoad, qActual, mode } = getParams();
+            const { mva, maxMW, mwLoad, qActual, sActual, mode } = getParams();
             const alertBox = document.getElementById('alertBox');
             
-            // Update teks aktual Q
+            // Update teks info S dan Q Aktual
+            document.getElementById('actualMvaText').innerText = `${sActual.toFixed(2)} MVA`;
             document.getElementById('actualMvarText').innerText = `${Math.abs(qActual).toFixed(2)} MVAR (${mode === 'lagging' ? 'Lagging' : 'Leading'})`;
 
             if (mwLoad < 0) {
@@ -436,11 +474,13 @@
 
             updateOperatingPoint(rangeLineData, actualPointData);
 
-            // Cek peringatan secara bertingkat
-            if (mwLoad > maxMW) {
-                showAlert(`Overload! Beban aktif (${mwLoad.toFixed(2)} MW) melebihi batas maksimal Engine (${maxMW.toFixed(2)} MW).`, 'red');
+            // Cek peringatan secara bertingkat (MVA Limit -> MW Limit -> Lagging/Leading Limit)
+            if (sActual > mva) {
+                showAlert(`OVERLOAD S! Daya Semu Aktual (${sActual.toFixed(2)} MVA) melebihi batas aman Stator (${mva.toFixed(2)} MVA).`, 'red');
+            } else if (mwLoad > maxMW) {
+                showAlert(`Overload P! Beban aktif (${mwLoad.toFixed(2)} MW) melebihi batas maksimal Prime Mover/Engine (${maxMW.toFixed(2)} MW).`, 'red');
             } else if (qActual > maxLagging && mode === 'lagging') {
-                showAlert(`Peringatan: Reaktif aktual (${qActual.toFixed(2)} MVAR) melebihi batas Lagging (${maxLagging.toFixed(2)} MVAR). Risiko Stator Overheat!`, 'red');
+                showAlert(`Peringatan: Reaktif aktual (${qActual.toFixed(2)} MVAR) melebihi batas Lagging (${maxLagging.toFixed(2)} MVAR). Risiko Stator/Rotor Overheat!`, 'red');
             } else if (qActual < maxLeading && mode === 'leading') {
                 showAlert(`Peringatan: Reaktif aktual (${Math.abs(qActual).toFixed(2)} MVAR) melebihi batas Leading (${Math.abs(maxLeading).toFixed(2)} MVAR). Risiko Loss of Synchronism!`, 'red');
             } else {
@@ -566,7 +606,6 @@ Hasilkan evaluasi dalam format JSON berdasarkan Capability Curve.`;
                 }
             };
 
-            // MENGGUNAKAN MODEL PUBLIK (GEMINI 1.5 FLASH) AGAR KOMPATIBEL DENGAN API KEY PRIBADI
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
             try {
