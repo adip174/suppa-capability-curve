@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Generator Capability Curve</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,7 +17,7 @@
         }
         
         /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
@@ -27,60 +27,60 @@
         .ai-content p { margin-bottom: 0.5rem; }
     </style>
 </head>
-<body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
+<body class="min-h-screen p-3 sm:p-6 lg:p-8 flex flex-col items-center">
 
     <div class="max-w-7xl w-full">
         <!-- Header -->
-        <div class="mb-8 text-center">
-            <h1 class="text-3xl font-bold text-white tracking-wide">Generator Capability Curve</h1>
-            <p class="text-slate-400 mt-2">PT. PLN Nusantara Power Services - PLTD SUPPA</p>
+        <div class="mb-6 lg:mb-8 text-center px-2">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-wide leading-tight">Generator Capability Curve</h1>
+            <p class="text-xs sm:text-sm text-slate-400 mt-2">PT. PLN Nusantara Power Services - PLTD SUPPA</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
             
             <!-- Left Panel: Inputs & Results -->
-            <div class="glass-panel p-6 flex flex-col gap-6 lg:col-span-1 max-h-[850px] overflow-y-auto">
+            <div class="glass-panel p-4 sm:p-6 flex flex-col gap-5 lg:gap-6 lg:col-span-1 lg:max-h-[850px] lg:overflow-y-auto">
                 
-                <!-- Generator Specs (Grid Layout) -->
+                <!-- Generator Specs (Adaptive Grid Layout) -->
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2 mb-4 flex items-center gap-2">
+                    <h2 class="text-base sm:text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2 mb-3 sm:mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Spesifikasi Teknis
                     </h2>
                     
                     <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 mb-3 text-center">
-                        <span class="text-xs text-slate-400 block mb-1">Model Generator</span>
-                        <span class="font-bold text-white text-sm">ABB AMG 1250RR10 DSE</span>
+                        <span class="text-[10px] sm:text-xs text-slate-400 block mb-1">Model Generator</span>
+                        <span class="font-bold text-white text-xs sm:text-sm">ABB AMG 1250RR10 DSE</span>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 text-center">
-                            <span class="text-xs text-slate-400 block mb-1">Daya Semu (S)</span>
-                            <span class="font-bold text-blue-400">14.33 MVA</span>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-2 sm:gap-3">
+                        <div class="bg-slate-800/50 p-2 sm:p-3 rounded-lg border border-slate-700 text-center flex flex-col justify-center">
+                            <span class="text-[10px] sm:text-xs text-slate-400 block mb-1">Daya Semu (S)</span>
+                            <span class="font-bold text-blue-400 text-xs sm:text-sm">14.33 MVA</span>
                         </div>
-                        <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 text-center">
-                            <span class="text-xs text-slate-400 block mb-1">Tegangan</span>
-                            <span class="font-bold text-white">11.000 V</span>
+                        <div class="bg-slate-800/50 p-2 sm:p-3 rounded-lg border border-slate-700 text-center flex flex-col justify-center">
+                            <span class="text-[10px] sm:text-xs text-slate-400 block mb-1">Tegangan</span>
+                            <span class="font-bold text-white text-xs sm:text-sm">11.000 V</span>
                         </div>
-                        <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 text-center">
-                            <span class="text-xs text-slate-400 block mb-1">Frekuensi</span>
-                            <span class="font-bold text-white">50 Hz</span>
+                        <div class="bg-slate-800/50 p-2 sm:p-3 rounded-lg border border-slate-700 text-center flex flex-col justify-center">
+                            <span class="text-[10px] sm:text-xs text-slate-400 block mb-1">Frekuensi</span>
+                            <span class="font-bold text-white text-xs sm:text-sm">50 Hz</span>
                         </div>
-                        <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-700 text-center">
-                            <span class="text-xs text-slate-400 block mb-1">Putaran</span>
-                            <span class="font-bold text-white">600 RPM</span>
+                        <div class="bg-slate-800/50 p-2 sm:p-3 rounded-lg border border-slate-700 text-center flex flex-col justify-center">
+                            <span class="text-[10px] sm:text-xs text-slate-400 block mb-1">Putaran</span>
+                            <span class="font-bold text-white text-xs sm:text-sm">600 RPM</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Load Input Form -->
                 <div class="bg-blue-900/20 p-4 rounded-lg border border-blue-500/30">
-                    <h2 class="text-md font-semibold text-blue-300 mb-4 flex items-center gap-2">
+                    <h2 class="text-sm sm:text-md font-semibold text-blue-300 mb-3 sm:mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                         Simulasi Operasi
                     </h2>
                     
-                    <div class="grid grid-cols-2 gap-4 mb-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Beban Aktif (MW)</label>
                             <input type="number" id="inputMW" value="10.0" step="0.1" 
@@ -96,7 +96,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Power Factor (Cos &phi;)</label>
                             <input type="number" id="inputPF" value="0.80" step="0.01" min="0.01" max="1" 
@@ -111,44 +111,44 @@
                         </div>
                     </div>
 
-                    <button onclick="updateAll()" class="w-full bg-blue-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-blue-500 transition shadow-lg shadow-blue-500/30">Update Kalkulasi</button>
+                    <button onclick="updateAll()" class="w-full bg-blue-600 text-white font-medium px-4 py-2 sm:py-3 rounded-lg hover:bg-blue-500 transition shadow-lg shadow-blue-500/30 text-sm sm:text-base">Update Kalkulasi</button>
                     
                     <div class="mt-3 grid grid-cols-2 gap-2">
                         <div class="flex flex-col justify-center bg-blue-950/50 p-2 rounded border border-blue-800/50">
-                            <span class="text-[10px] text-slate-400">Daya Semu Aktual (S):</span>
-                            <span class="text-sm font-bold text-blue-300" id="actualMvaText">12.50 MVA</span>
+                            <span class="text-[9px] sm:text-[10px] text-slate-400">Daya Semu Aktual (S):</span>
+                            <span class="text-xs sm:text-sm font-bold text-blue-300" id="actualMvaText">12.50 MVA</span>
                         </div>
                         <div class="flex flex-col justify-center bg-indigo-950/50 p-2 rounded border border-indigo-800/50">
-                            <span class="text-[10px] text-slate-400">Reaktif Aktual (Q):</span>
-                            <span class="text-sm font-bold text-indigo-300" id="actualMvarText">7.50 MVAR</span>
+                            <span class="text-[9px] sm:text-[10px] text-slate-400">Reaktif Aktual (Q):</span>
+                            <span class="text-xs sm:text-sm font-bold text-indigo-300" id="actualMvarText">7.50 MVAR</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Results Display -->
                 <div>
-                    <h2 class="text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2 mb-4">Batas Reaktif Teoritis</h2>
+                    <h2 class="text-base sm:text-lg font-semibold text-slate-200 border-b border-slate-700 pb-2 mb-3 sm:mb-4">Batas Reaktif Teoritis</h2>
                     
                     <div id="alertBox" class="hidden mb-4 p-3 rounded-lg text-sm font-medium"></div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-emerald-900/20 p-4 rounded-lg border border-emerald-500/30 text-center relative overflow-hidden">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div class="bg-emerald-900/20 p-3 sm:p-4 rounded-lg border border-emerald-500/30 text-center relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
                             <p class="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold mb-1">Maks Lagging</p>
-                            <p class="text-[10px] text-slate-500 mb-2">(Over-excited)</p>
-                            <p class="text-2xl font-bold text-emerald-400" id="resLagging">0.00</p>
-                            <p class="text-[10px] text-emerald-500/70 mt-1 mb-2">MVAR</p>
-                            <div class="bg-emerald-950/60 rounded py-1 px-2 border border-emerald-800/50 inline-block">
+                            <p class="text-[9px] sm:text-[10px] text-slate-500 mb-1 sm:mb-2">(Over-excited)</p>
+                            <p class="text-xl sm:text-2xl font-bold text-emerald-400" id="resLagging">0.00</p>
+                            <p class="text-[9px] sm:text-[10px] text-emerald-500/70 mt-1 mb-2">MVAR</p>
+                            <div class="bg-emerald-950/60 rounded py-1 px-2 border border-emerald-800/50 inline-block w-full">
                                 <p class="text-[10px] text-emerald-300">Batas Cos &phi;: <span id="resPFLagging" class="font-bold">0.000</span></p>
                             </div>
                         </div>
-                        <div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30 text-center relative overflow-hidden">
+                        <div class="bg-amber-900/20 p-3 sm:p-4 rounded-lg border border-amber-500/30 text-center relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
                             <p class="text-[10px] uppercase tracking-wider text-amber-400 font-semibold mb-1">Maks Leading</p>
-                            <p class="text-[10px] text-slate-500 mb-2">(Under-excited)</p>
-                            <p class="text-2xl font-bold text-amber-400" id="resLeading">0.00</p>
-                            <p class="text-[10px] text-amber-500/70 mt-1 mb-2">MVAR</p>
-                            <div class="bg-amber-950/60 rounded py-1 px-2 border border-amber-800/50 inline-block">
+                            <p class="text-[9px] sm:text-[10px] text-slate-500 mb-1 sm:mb-2">(Under-excited)</p>
+                            <p class="text-xl sm:text-2xl font-bold text-amber-400" id="resLeading">0.00</p>
+                            <p class="text-[9px] sm:text-[10px] text-amber-500/70 mt-1 mb-2">MVAR</p>
+                            <div class="bg-amber-950/60 rounded py-1 px-2 border border-amber-800/50 inline-block w-full">
                                 <p class="text-[10px] text-amber-300">Batas Cos &phi;: <span id="resPFLeading" class="font-bold">0.000</span></p>
                             </div>
                         </div>
@@ -157,41 +157,41 @@
 
                 <!-- ✨ Gemini API Integration Section -->
                 <div class="bg-indigo-900/20 p-4 rounded-lg border border-indigo-500/30 flex flex-col mt-2">
-                    <div class="flex justify-between items-center mb-3">
-                        <h2 class="text-md font-semibold text-indigo-300">Asisten Ahli AI</h2>
-                        <button onclick="analyzeWithGemini()" id="btnAI" class="bg-indigo-600 text-white font-medium px-3 py-1.5 rounded-md hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/30 text-xs flex items-center gap-1">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
+                        <h2 class="text-sm sm:text-md font-semibold text-indigo-300">Asisten Ahli AI</h2>
+                        <button onclick="analyzeWithGemini()" id="btnAI" class="w-full sm:w-auto bg-indigo-600 text-white font-medium px-3 py-2 sm:py-1.5 rounded-md hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/30 text-xs flex justify-center items-center gap-1">
                             ✨ <span>Analisis AI</span>
                         </button>
                     </div>
-                    <p class="text-[10px] text-slate-400 mb-3 leading-relaxed">Dapatkan evaluasi margin keamanan berdasarkan kondisi simulasi.</p>
+                    <p class="text-[10px] sm:text-xs text-slate-400 mb-3 leading-relaxed">Dapatkan evaluasi margin keamanan berdasarkan kondisi simulasi.</p>
                     
-                    <div id="aiLoading" class="hidden text-sm text-indigo-400 animate-pulse bg-indigo-950/50 p-3 rounded text-center border border-indigo-800/50">
+                    <div id="aiLoading" class="hidden text-xs sm:text-sm text-indigo-400 animate-pulse bg-indigo-950/50 p-3 rounded text-center border border-indigo-800/50">
                         Menghitung Margin Keamanan...
                     </div>
-                    <div id="aiResultBox" class="hidden bg-slate-900/80 p-4 rounded border border-slate-700 max-h-72 overflow-y-auto">
-                        <div class="grid grid-cols-2 gap-3 mb-4">
-                            <div class="bg-emerald-950/50 p-2 rounded border border-emerald-500/30 text-center">
-                                <p class="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">AI Limit Lagging</p>
-                                <p class="text-lg font-bold text-emerald-300" id="aiRecLagging">-</p>
+                    <div id="aiResultBox" class="hidden bg-slate-900/80 p-3 sm:p-4 rounded border border-slate-700 max-h-72 overflow-y-auto">
+                        <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-4">
+                            <div class="bg-emerald-950/50 p-2 rounded border border-emerald-500/30 text-center flex flex-col justify-center">
+                                <p class="text-[9px] sm:text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">AI Limit Lagging</p>
+                                <p class="text-sm sm:text-lg font-bold text-emerald-300" id="aiRecLagging">-</p>
                             </div>
-                            <div class="bg-amber-950/50 p-2 rounded border border-amber-500/30 text-center">
-                                <p class="text-[10px] text-amber-400 font-semibold uppercase tracking-wider">AI Limit Leading</p>
-                                <p class="text-lg font-bold text-amber-300" id="aiRecLeading">-</p>
+                            <div class="bg-amber-950/50 p-2 rounded border border-amber-500/30 text-center flex flex-col justify-center">
+                                <p class="text-[9px] sm:text-[10px] text-amber-400 font-semibold uppercase tracking-wider">AI Limit Leading</p>
+                                <p class="text-sm sm:text-lg font-bold text-amber-300" id="aiRecLeading">-</p>
                             </div>
                         </div>
-                        <div id="aiTextResult" class="text-sm text-slate-300 ai-content space-y-3"></div>
+                        <div id="aiTextResult" class="text-xs sm:text-sm text-slate-300 ai-content space-y-3"></div>
                     </div>
                 </div>
 
             </div>
 
             <!-- Right Panel: Chart -->
-            <div class="glass-panel p-6 lg:col-span-2 flex flex-col h-[650px] lg:h-auto">
-                <h2 class="text-lg font-semibold text-slate-200 mb-4 text-center">Kurva Kapabilitas Generator</h2>
-                <div class="flex-grow relative w-full h-full min-h-[400px]">
+            <div class="glass-panel p-4 sm:p-6 lg:col-span-2 flex flex-col min-h-[500px] lg:h-[850px]">
+                <h2 class="text-base sm:text-lg font-semibold text-slate-200 mb-2 sm:mb-4 text-center">Kurva Kapabilitas Generator</h2>
+                <div class="flex-grow relative w-full h-full min-h-[350px]">
                     <canvas id="capabilityChart"></canvas>
                 </div>
-                <div class="text-[10px] text-slate-500 mt-4 text-center bg-slate-800/50 p-3 rounded-lg border border-slate-700">
+                <div class="text-[9px] sm:text-[10px] text-slate-500 mt-3 sm:mt-4 text-center bg-slate-800/50 p-2 sm:p-3 rounded-lg border border-slate-700 leading-relaxed">
                     *Kurva didasarkan pada perhitungan limitasi Stator (MVA) dan aproksimasi stabilitas statis. Area di dalam kurva adalah area operasi aman. Garis putus-putus biru menunjukkan rentang operasi reaktif pada beban aktif saat ini.
                 </div>
             </div>
@@ -205,8 +205,12 @@
         // Fixed Parameters based on User Document
         const FIXED_MVA = 14.33;
 
-        // Gemini API Configuration
-        const apiKey = "AIzaSyBk8C5w7kVV_i5pIZtCiHMO4Fy8qdOkr1E"; // KETIK API KEY ANDA DI SINI DI ANTARA TANDA KUTIP
+        // WAJIB KOSONG DI DALAM CANVAS!
+        // Lingkungan Canvas akan otomatis menyisipkan API Key yang memiliki akses
+        // ke model gemini-2.5-flash-preview-09-2025.
+        // Jika Anda mengisi dengan API key publik Anda sendiri, Anda akan mendapatkan Error 404
+        // karena model preview tersebut tidak tersedia untuk publik.
+        const apiKey = "AIzaSyBk8C5w7kVV_i5pIZtCiHMO4Fy8qdOkr1E"; 
 
         // Inisialisasi awal
         window.onload = function() {
@@ -317,7 +321,7 @@
                 data: {
                     datasets: [
                         {
-                            label: 'Batas Lagging (Stator Heating)',
+                            label: 'Batas Lagging (Stator)',
                             data: [],
                             borderColor: '#34d399', 
                             backgroundColor: 'rgba(52, 211, 153, 0.15)',
@@ -328,7 +332,7 @@
                             borderWidth: 2
                         },
                         {
-                            label: 'Batas Leading (Stability Limit)',
+                            label: 'Batas Leading (Stability)',
                             data: [],
                             borderColor: '#fbbf24', 
                             backgroundColor: 'rgba(251, 191, 36, 0.15)',
@@ -339,7 +343,7 @@
                             borderWidth: 2
                         },
                         {
-                            label: 'Rentang Operasi Reaktif (Batas MW Saat Ini)',
+                            label: 'Batas MW Saat Ini',
                             data: [],
                             backgroundColor: 'rgba(96, 165, 250, 0)', 
                             borderColor: 'rgba(96, 165, 250, 0.4)',
@@ -355,8 +359,8 @@
                             backgroundColor: '#ef4444', // Red 500
                             borderColor: '#fca5a5',
                             borderWidth: 2,
-                            pointRadius: 7,
-                            pointHoverRadius: 10,
+                            pointRadius: 6,
+                            pointHoverRadius: 9,
                             showLine: false,
                             type: 'scatter'
                         }
@@ -384,7 +388,8 @@
                             labels: {
                                 color: '#cbd5e1',
                                 usePointStyle: true,
-                                padding: 20
+                                padding: 15,
+                                boxWidth: 8
                             }
                         }
                     },
@@ -392,13 +397,13 @@
                         x: {
                             type: 'linear',
                             position: 'bottom',
-                            title: { display: true, text: 'Daya Aktif - P (MW)', color: '#cbd5e1', font: { weight: '600', size: 13 } },
+                            title: { display: true, text: 'Daya Aktif - P (MW)', color: '#cbd5e1', font: { weight: '600', size: 12 } },
                             min: 0,
                             grid: { color: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(255,255,255,0.2)' },
                             ticks: { color: '#94a3b8' }
                         },
                         y: {
-                            title: { display: true, text: 'Daya Reaktif - Q (MVAR)', color: '#cbd5e1', font: { weight: '600', size: 13 } },
+                            title: { display: true, text: 'Daya Reaktif - Q (MVAR)', color: '#cbd5e1', font: { weight: '600', size: 12 } },
                             grid: { color: 'rgba(255, 255, 255, 0.05)', zeroLineColor: 'rgba(255, 255, 255, 0.3)' },
                             ticks: { color: '#94a3b8' }
                         }
@@ -512,7 +517,7 @@
             const alertBox = document.getElementById('alertBox');
             const bgClasses = color === 'red' ? 'bg-red-900/30 border-red-500/50 text-red-400' : 'bg-blue-900/30 border-blue-500/50 text-blue-400';
             
-            alertBox.className = `mb-4 p-3 rounded-lg text-sm font-medium border ${bgClasses}`;
+            alertBox.className = `mb-4 p-3 rounded-lg text-xs sm:text-sm font-medium border ${bgClasses}`;
             alertBox.innerText = msg;
             alertBox.classList.remove('hidden');
         }
@@ -546,14 +551,6 @@
         }
 
         async function analyzeWithGemini() {
-            if (!apiKey || apiKey === "") {
-                const aiTextResult = document.getElementById('aiTextResult');
-                const aiResultBox = document.getElementById('aiResultBox');
-                aiTextResult.innerHTML = `<span class="text-red-400">API Key kosong! Silakan masukkan API Key di source code.</span>`;
-                aiResultBox.classList.remove('hidden');
-                return;
-            }
-
             const mwLoad = document.getElementById('inputMW').value;
             const resLagging = document.getElementById('resLagging').innerText;
             const resLeading = document.getElementById('resLeading').innerText;
@@ -606,7 +603,7 @@ Hasilkan evaluasi dalam format JSON berdasarkan Capability Curve.`;
                 }
             };
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
             try {
                 const result = await fetchWithRetry(url, payload);
