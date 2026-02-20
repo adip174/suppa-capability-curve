@@ -198,7 +198,7 @@
         const FIXED_MVA = 14.33;
 
         // Gemini API Configuration
-        const apiKey = "AIzaSyDZnSGbyxnCJfCNqAPGb9igVEvOYZTO5Bc"; // Disuplai otomatis oleh environment eksekusi
+        const apiKey = "AIzaSyDZnSGbyxnCJfCNqAPGb9igVEvOYZTO5Bc"; // KETIK API KEY ANDA DI SINI DI ANTARA TANDA KUTIP
 
         // Inisialisasi awal
         window.onload = function() {
@@ -493,7 +493,10 @@
                         body: JSON.stringify(payload)
                     });
                     
-                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    if (!response.ok) {
+                        const errData = await response.json();
+                        throw new Error(`API Error ${response.status}: ${errData.error?.message || response.statusText}`);
+                    }
                     return await response.json();
                 } catch (error) {
                     if (i === retries - 1) throw error;
@@ -503,6 +506,14 @@
         }
 
         async function analyzeWithGemini() {
+            if (!apiKey || apiKey === "") {
+                const aiTextResult = document.getElementById('aiTextResult');
+                const aiResultBox = document.getElementById('aiResultBox');
+                aiTextResult.innerHTML = `<span class="text-red-400">API Key kosong! Silakan masukkan API Key di source code.</span>`;
+                aiResultBox.classList.remove('hidden');
+                return;
+            }
+
             const mwLoad = document.getElementById('inputMW').value;
             const resLagging = document.getElementById('resLagging').innerText;
             const resLeading = document.getElementById('resLeading').innerText;
@@ -555,7 +566,8 @@ Hasilkan evaluasi dalam format JSON berdasarkan Capability Curve.`;
                 }
             };
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            // MENGGUNAKAN MODEL PUBLIK (GEMINI 1.5 FLASH) AGAR KOMPATIBEL DENGAN API KEY PRIBADI
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
             try {
                 const result = await fetchWithRetry(url, payload);
@@ -581,7 +593,10 @@ Hasilkan evaluasi dalam format JSON berdasarkan Capability Curve.`;
                 `;
                 aiResultBox.classList.remove('hidden');
             } catch (error) {
-                aiTextResult.innerHTML = `<span class="text-red-400">Gagal terhubung ke AI atau memproses data kurva. Coba lagi beberapa saat.</span>`;
+                console.error("Detail Error API Gemini:", error);
+                aiTextResult.innerHTML = `<span class="text-red-400 font-semibold mb-1 block">Gagal terhubung ke AI.</span>
+                <span class="text-red-300 text-xs">${error.message}</span>
+                <br><br><span class="text-slate-400 text-xs">Tekan <b>F12</b> lalu buka tab <b>Console</b> untuk melihat detail error. Pastikan API key Anda valid dan URL hosting Anda terdaftar (jika disetting restriction).</span>`;
                 aiResultBox.classList.remove('hidden');
             } finally {
                 // UI State: Restore
